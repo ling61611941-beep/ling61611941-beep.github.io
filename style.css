@@ -420,7 +420,25 @@ h1 {
   transform: translateY(-1px);
 }
 
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
 @media print {
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  body {
+    color: #000 !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 不需要打印的元素 */
   .site-header,
   .hero-actions,
   .resume-actions,
@@ -429,31 +447,111 @@ h1 {
     display: none !important;
   }
 
-  body {
-    background: #fff !important;
-  }
-
-  .hero-text,
-  .hero-card,
-  .card {
-    background: #fff !important;
-    box-shadow: none !important;
-    border: 1px solid #ddd !important;
-    backdrop-filter: none !important;
+  /* 把网页改成适合打印的单栏 */
+  .hero,
+  .two-col,
+  .three-col,
+  .hero-metrics,
+  .quick-info,
+  .timeline,
+  .grid {
+    display: block !important;
+    grid-template-columns: 1fr !important;
   }
 
   .wrap {
     width: 100% !important;
     max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .section {
+    padding: 12px 0 !important;
+    margin: 0 !important;
+  }
+
+  .section-title {
+    margin-bottom: 10px !important;
+  }
+
+  /* 卡片变成正常文档块，避免奇怪空白 */
+  .hero-text,
+  .hero-card,
+  .card,
+  .quick-info li,
+  .hero-metrics article {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: 1px solid #dddddd !important;
+    backdrop-filter: none !important;
+    margin-bottom: 12px !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .hero-text,
+  .hero-card,
+  .card {
+    padding: 16px !important;
+    border-radius: 8px !important;
+  }
+
+  .quick-info,
+  .hero-metrics {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .quick-info li,
+  .hero-metrics article {
+    padding: 10px 12px !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  a,
+  span,
+  strong {
+    color: #000 !important;
+  }
+
+  h1 {
+    font-size: 28px !important;
+  }
+
+  h2 {
+    font-size: 22px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+  p,
+  li {
+    font-size: 14px !important;
   }
 
   a {
-    color: #000 !important;
     text-decoration: none !important;
   }
-}
 
-@media (max-width: 768px) {
+  /* 简历预览整个模块不打印，避免留下空白大框 */
+  .resume-card {
+    display: none !important;
+  }
+
+  /* 联系方式和项目尽量不要被截断 */
+  .contact-card,
+  .project-card,
+  .timeline-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
   .floating-tools {
     right: 14px;
     bottom: 14px;
